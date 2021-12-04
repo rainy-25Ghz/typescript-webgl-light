@@ -149,7 +149,24 @@ function main() {
   );
   let worldLocation = gl.getUniformLocation(program, 'u_world');
 
-  //创建一个vao对象
+  //创建一个vao对象,VAO 记录的是vertex attribute 的格式，由 glVertexAttribPointer 设置。vertex attribute 对应的 VBO 的名字, 由一对 glBindBuffer 和  glVertexAttribPointer 设置。
+
+  // A Vertex Array Object (VAO) is an OpenGL Object that stores all of the state needed to supply vertex data (with one minor exception noted below). It stores the format of the vertex data as well as the Buffer Objects (see below) providing the vertex data arrays.
+  // Create a vertex array object (attribute state)
+  let vao = gl.createVertexArray();
+
+  // and make it the one we're currently working with
+  gl.bindVertexArray(vao);
+
+  //创建一个顶点位置buffer
+  let positionBuffer = gl.createBuffer();
+  // Turn on the attribute
+  gl.enableVertexAttribArray(positionAttributeLocation);
+
+  // Bind it to ARRAY_BUFFER (think of it as ARRAY_BUFFER = positionBuffer)
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  // Set Geometry.
+  setGeometry(gl);
 }
 
 //设置F的顶点几何数据
