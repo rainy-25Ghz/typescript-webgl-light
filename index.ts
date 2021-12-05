@@ -135,8 +135,11 @@ void main() {
 function main() {
   const canvas = document.getElementById('canvas') as HTMLCanvasElement;
   let shininessInput = document.getElementById('shininess') as HTMLInputElement;
-  let shininessLabel = document.getElementById('shininess-label');
-
+  let shininessLabel = document.getElementById(
+    'shininess-label'
+  ) as HTMLDivElement;
+  let fRotationInput = document.getElementById('fRotation') as HTMLInputElement;
+  let degLabel = document.getElementById('deg') as HTMLDivElement;
   let gl = canvas.getContext('webgl2');
   if (!gl) {
     return;
@@ -242,9 +245,16 @@ function main() {
   let fieldOfViewRadians = degToRad(60);
   let fRotationRadians = 0; //F绕y轴旋转的角度
   let shininess = 150; //shiness，影响镜面高光的散射/半径，值越小半径越大。
+  shininessLabel.innerText = `反光度:${shininess}`;
   shininessInput.addEventListener('input', (e) => {
-    shininess = parseFloat(shininessInput.value);
-    shininessLabel.nodeValue = `shiness:${shininess}`;
+    shininess = parseInt(shininessInput.value);
+    shininessLabel.innerText = `反光度:${shininess}`;
+    drawScene();
+  });
+  degLabel.innerText = `角度:${radToDeg(fRotationRadians)}`;
+  fRotationInput.addEventListener('input', () => {
+    fRotationRadians = degToRad(parseInt(fRotationInput.value));
+    degLabel.innerText = `角度:${Math.floor(radToDeg(fRotationRadians))}`;
     drawScene();
   });
   drawScene();
