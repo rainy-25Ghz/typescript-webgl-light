@@ -167,6 +167,9 @@ function main() {
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   // Set Geometry.
   setGeometry(gl);
+
+
+  
 }
 
 //设置F的顶点几何数据
@@ -222,10 +225,11 @@ function setGeometry(gl) {
     // left side
     0, 0, 0, 0, 0, 30, 0, 150, 30, 0, 0, 0, 0, 150, 30, 0, 150, 0,
   ]);
+  gl.bufferData(gl.ARRAY_BUFFER,positions,gl.STATIC_DRAW)
 }
 
 //设置F的法线数据
-function setNormals(gl) {
+function setNormals(gl:WebGL2RenderingContext) {
   var normals = new Float32Array([
     // left column front
     0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1,
