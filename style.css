@@ -8,6 +8,8 @@ h2 {
   background-color: aliceblue;
 }
 .control {
+  position: absolute;
+  top: 30px;
   display: flex;
   flex-direction: column;
   width: 100vw;

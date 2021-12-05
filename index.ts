@@ -187,6 +187,9 @@ function main() {
   let degLabel = document.getElementById('deg') as HTMLDivElement;
   let gl = canvas.getContext('webgl2');
   if (!gl) {
+    prompt(
+      '您的设备不支持webgl2 😵😵😵, 如果是ios15，请开启safari实验功能中的webgl2'
+    );
     return;
   }
   let program = createProgramFromSources(gl, [
