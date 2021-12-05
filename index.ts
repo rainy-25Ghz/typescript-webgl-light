@@ -251,10 +251,10 @@ function main() {
     shininessLabel.innerText = `反光度:${shininess}`;
     drawScene();
   });
-  degLabel.innerText = `角度:${radToDeg(fRotationRadians)}`;
+  degLabel.innerText = `绕Y轴角度:${radToDeg(fRotationRadians)}`;
   fRotationInput.addEventListener('input', () => {
     fRotationRadians = degToRad(parseInt(fRotationInput.value));
-    degLabel.innerText = `角度:${Math.floor(radToDeg(fRotationRadians))}`;
+    degLabel.innerText = `绕Y轴角度:${Math.floor(radToDeg(fRotationRadians))}`;
     drawScene();
   });
   drawScene();
