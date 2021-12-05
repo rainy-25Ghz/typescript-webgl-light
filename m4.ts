@@ -51,7 +51,7 @@ export const m4 = {
    * @param {Matrix4} b A matrix.
    * @param {Matrix4} [dst] optional matrix to store result
    * @return {Matrix4} dst or a new matrix if none provided
-   */ multiply(a, b, dst) {
+   */ multiply(a, b, dst?: Float32Array) {
     dst = dst || new MatType(16);
     var b00 = b[0 * 4 + 0];
     var b01 = b[0 * 4 + 1];
@@ -252,7 +252,7 @@ export const m4 = {
    * @param {Matrix4} [dst] optional matrix to store result
    * @return {Matrix4} dst or a new matrix if none provided
    * @memberOf module:webgl-3d-math
-   */ transpose(m, dst) {
+   */ transpose(m, dst?: Float32Array) {
     dst = dst || new MatType(16);
 
     dst[0] = m[0];
@@ -285,7 +285,7 @@ export const m4 = {
    * @param {Matrix4} [dst] optional matrix to store result
    * @return {Matrix4} dst or a new matrix if none provided
    * @memberOf module:webgl-3d-math
-   */ lookAt(cameraPosition, target, up, dst) {
+   */ lookAt(cameraPosition, target, up, dst?: Float32Array) {
     dst = dst || new MatType(16);
     var zAxis = m4.normalize(m4.subtractVectors(cameraPosition, target));
     var xAxis = m4.normalize(m4.cross(up, zAxis));
@@ -328,7 +328,7 @@ export const m4 = {
    * @param {Matrix4} [dst] optional matrix to store result
    * @return {Matrix4} dst or a new matrix if none provided
    * @memberOf module:webgl-3d-math
-   */ perspective(fieldOfViewInRadians, aspect, near, far, dst) {
+   */ perspective(fieldOfViewInRadians, aspect, near, far, dst?: Float32Array) {
     dst = dst || new MatType(16);
     var f = Math.tan(Math.PI * 0.5 - 0.5 * fieldOfViewInRadians);
     var rangeInv = 1.0 / (near - far);
@@ -370,7 +370,7 @@ export const m4 = {
    * @return {Matrix4} dst or a new matrix if none provided
    * @memberOf module:webgl-3d-math
    */
-  orthographic(left, right, bottom, top, near, far, dst) {
+  orthographic(left, right, bottom, top, near, far, dst?: Float32Array) {
     dst = dst || new MatType(16);
 
     dst[0] = 2 / (right - left);
@@ -411,7 +411,7 @@ export const m4 = {
    * @return {Matrix4} dst or a new matrix if none provided
    * @memberOf module:webgl-3d-math
    */
-  frustum(left, right, bottom, top, near, far, dst) {
+  frustum(left, right, bottom, top, near, far, dst?: Float32Array) {
     dst = dst || new MatType(16);
 
     var dx = right - left;
@@ -446,7 +446,7 @@ export const m4 = {
    * @return {Matrix4} dst or a new matrix if none provided
    * @memberOf module:webgl-3d-math
    */
-  translation(tx, ty, tz, dst) {
+  translation(tx, ty, tz, dst?: Float32Array) {
     dst = dst || new MatType(16);
 
     dst[0] = 1;
@@ -478,7 +478,7 @@ export const m4 = {
    * @return {Matrix4} dst or a new matrix if none provided
    * @memberOf module:webgl-3d-math
    */
-  translate(m, tx, ty, tz, dst) {
+  translate(m, tx, ty, tz, dst?: Float32Array) {
     // This is the optimized version of
     // return multiply(m, translation(tx, ty, tz), dst);
     dst = dst || new MatType(16);
@@ -529,7 +529,7 @@ export const m4 = {
    * @return {Matrix4} dst or a new matrix if none provided
    * @memberOf module:webgl-3d-math
    */
-  xRotation(angleInRadians, dst) {
+  xRotation(angleInRadians, dst?: Float32Array) {
     dst = dst || new MatType(16);
     var c = Math.cos(angleInRadians);
     var s = Math.sin(angleInRadians);
@@ -604,7 +604,7 @@ export const m4 = {
    * @param {Matrix4} [dst] optional matrix to store result
    * @return {Matrix4} dst or a new matrix if none provided
    * @memberOf module:webgl-3d-math
-   */ yRotation(angleInRadians, dst) {
+   */ yRotation(angleInRadians, dst?: Float32Array) {
     dst = dst || new MatType(16);
     var c = Math.cos(angleInRadians);
     var s = Math.sin(angleInRadians);
@@ -635,7 +635,7 @@ export const m4 = {
    * @param {Matrix4} [dst] optional matrix to store result
    * @return {Matrix4} dst or a new matrix if none provided
    * @memberOf module:webgl-3d-math
-   */ yRotate(m, angleInRadians, dst) {
+   */ yRotate(m, angleInRadians, dst?: Float32Array) {
     // this is the optimized version of
     // return multiply(m, yRotation(angleInRadians), dst);
     dst = dst || new MatType(16);
@@ -679,7 +679,7 @@ export const m4 = {
    * @param {Matrix4} [dst] optional matrix to store result
    * @return {Matrix4} dst or a new matrix if none provided
    * @memberOf module:webgl-3d-math
-   */ zRotation(angleInRadians, dst) {
+   */ zRotation(angleInRadians, dst?: Float32Array) {
     dst = dst || new MatType(16);
     var c = Math.cos(angleInRadians);
     var s = Math.sin(angleInRadians);
@@ -1280,7 +1280,7 @@ export const m4 = {
    * @param {Vector4} dst optional vector4 to store result
    * @return {Vector4} dst or new Vector4 if not provided
    * @memberOf module:webgl-3d-math
-   */ transformVector(m, v, dst) {
+   */ transformVector(m, v, dst?: Float32Array) {
     dst = dst || new MatType(4);
     for (var i = 0; i < 4; ++i) {
       dst[i] = 0.0;
