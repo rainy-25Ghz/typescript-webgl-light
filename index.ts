@@ -103,8 +103,10 @@ in vec3 v_normal;
 in vec3 v_surfaceToLight;
 in vec3 v_surfaceToView; 
 
-uniform vec4 u_color;
-uniform float u_shininess;
+uniform vec4 u_color;//F的颜色
+uniform float u_shininess;//反光度,影响镜面高光的半径
+uniform vec3 u_lightColor;//点光源颜色
+uniform vec3 u_specularColor;//镜面高光颜色
  
 // 定义一个传递到片段着色器的颜色变量
 out vec4 outColor;
@@ -127,12 +129,55 @@ void main() {
   outColor = u_color;
  
   // 只将颜色部分（不包含 alpha） 和光照相乘
-  outColor.rgb *= light;
-
-  // 直接加上高光
-  outColor.rgb += specular;
+  outColor.rgb *= light * u_lightColor;
+ 
+  // 和高光*高光颜色相加
+  outColor.rgb += specular * u_specularColor;
 }`;
 function main() {
+  let lightingColor = [1, 1, 1];
+  const lightingColorInput = document.getElementById(
+    'color'
+  ) as HTMLSelectElement;
+  lightingColorInput.addEventListener('change', (e) => {
+    switch (lightingColorInput.value) {
+      case 'red':
+        lightingColor = [1, 0.6, 0.6];
+        break;
+      case 'green':
+        lightingColor = [0.6, 1, 0.6];
+        break;
+      case 'blue':
+        lightingColor = [0.6, 0.6, 1];
+        break;
+      case 'white':
+        lightingColor = [1, 1, 1];
+        break;
+    }
+    drawScene();
+  });
+  let specularColor = [1, 1, 1];
+  const specularColorInput = document.getElementById(
+    'specular-color'
+  ) as HTMLSelectElement;
+  specularColorInput.addEventListener('change', (e) => {
+    switch (specularColorInput.value) {
+      case 'red':
+        specularColor = [1, 0.2, 0.2];
+        break;
+      case 'green':
+        specularColor = [0.2, 1, 0.2];
+        break;
+      case 'blue':
+        specularColor = [0.2, 0.2, 1];
+        break;
+      case 'white':
+        specularColor = [1, 1, 1];
+        break;
+    }
+    drawScene();
+  });
+
   const canvas = document.getElementById('canvas') as HTMLCanvasElement;
   let shininessInput = document.getElementById('shininess') as HTMLInputElement;
   let shininessLabel = document.getElementById(
@@ -173,7 +218,8 @@ function main() {
   );
   let worldLocation = gl.getUniformLocation(program, 'u_world');
   let shininessLocation = gl.getUniformLocation(program, 'u_shininess');
-
+  let lightingColorLocation = gl.getUniformLocation(program, 'u_lightColor');
+  let specularColorLocation = gl.getUniformLocation(program, 'u_specularColor');
   //创建一个vao对象,VAO 记录的是vertex attribute 的格式，由 glVertexAttribPointer 设置。vertex attribute 对应的 VBO 的名字, 由一对 glBindBuffer 和  glVertexAttribPointer 设置。
 
   // A Vertex Array Object (VAO) is an OpenGL Object that stores all of the state needed to supply vertex data (with one minor exception noted below). It stores the format of the vertex data as well as the Buffer Objects (see below) providing the vertex data arrays.
@@ -321,9 +367,9 @@ function main() {
       worldInverseTransposeMatrix
     );
 
-    //设置颜色橙色
+    //设置颜色浅绿色
     // Set the color to use
-    gl.uniform4fv(colorLocation, [0.9, 0.4, 0.0, 0.9]);
+    gl.uniform4fv(colorLocation, [0.2, 1, 0.2, 1]);
 
     // set the light position
     gl.uniform3fv(lightWorldPositionLocation, [20, 30, 60]);
@@ -331,6 +377,10 @@ function main() {
     gl.uniform3fv(viewWorldPositionLocation, camera);
 
     gl.uniform1f(shininessLocation, shininess);
+
+    gl.uniform3fv(lightingColorLocation, lightingColor);
+
+    gl.uniform3fv(specularColorLocation, specularColor);
 
     //绘制三角形
     // Draw the geometry.
