@@ -1,3 +1,3 @@
-# typescript-ohv6ex
+# typescript-webgl2 point light
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/typescript-ohv6ex)
+[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/webgl2-point-light?file=index.ts)
