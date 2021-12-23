@@ -239,12 +239,12 @@ function main() {
 
   // Bind it to ARRAY_BUFFER (think of it as ARRAY_BUFFER = positionBuffer)
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-  // Set Geometry.
+  // Set Geometry. 设置顶点数据
   setGeometry(gl);
   // Tell the attribute how to get data out of positionBuffer (ARRAY_BUFFER)
   let size = 3; // 3 components per iteration
   let type = gl.FLOAT; // the data is 32bit floats
-  let normalize = false; // don't normalize the data
+  let normalize = false; // don't normalize the data，这里不用正则化是因为
   let stride = 0; // 0 = move forward size * sizeof(type) each iteration to get the next position
   let offset = 0; // start at the beginning of the buffer
   gl.vertexAttribPointer(
@@ -356,7 +356,9 @@ function main() {
       worldMatrix
     );
     let worldInverseMatrix = m4.inverse(worldMatrix);
+    //计算这个矩阵是为了让法线不被变形
     let worldInverseTransposeMatrix = m4.transpose(worldInverseMatrix);
+    
     // Set the matrices
     gl.uniformMatrix4fv(worldLocation, false, worldMatrix);
     gl.uniformMatrix4fv(

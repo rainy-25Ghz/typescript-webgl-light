@@ -2,5 +2,7 @@
   "name": "typescript",
   "version": "0.0.0",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "glslify-loader": "^2.0.0"
+  }
 }
