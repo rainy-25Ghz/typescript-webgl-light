@@ -30,7 +30,6 @@ function createShader(
   if (success) {
     return shader;
   }
-
   console.log(gl.getShaderInfoLog(shader));
   gl.deleteShader(shader);
 }
